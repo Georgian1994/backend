@@ -36,6 +36,21 @@ const getLanguageCode = (code) => {
   return sourceLanguageMap[code] || lowercaseCode;
 };
 
+// Root route handler for Railway deployment
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'Translation API is running', 
+    endpoints: [
+      { method: 'GET', path: '/api/health', description: 'Health check endpoint' },
+      { method: 'GET', path: '/api/languages', description: 'Get all supported languages' },
+      { method: 'GET', path: '/api/source-languages', description: 'Get source languages including auto-detect' },
+      { method: 'GET', path: '/api/target-languages', description: 'Get target languages' },
+      { method: 'POST', path: '/api/translate', description: 'Translate text between languages' }
+    ]
+  });
+});
+
 // Endpoint for text translation
 app.post('/api/translate', async (req, res) => {
   try {
